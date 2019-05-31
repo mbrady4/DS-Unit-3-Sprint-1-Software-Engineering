@@ -4,11 +4,18 @@ import random
 class Product:
 
     def __init__(self, name, price=10, weight=20, flammability=0.5):
+        # Validate attributes
+        assert price > 0, 'price attribute must be greater than zero'
+        assert weight > 0, 'weight must be greater than zero'
+        assert flammability > 0, 'flammability must be greater than zero'
+
+        # Set attributes
         self.name = name
         self.price = price
         self.weight = weight
         self.flammability = flammability
         self.identifier = random.randint(1000000, 9999999)
+        self.security_score = self.price * self.flammability
 
     def stealability(self):
         ratio = self.price / self.weight
@@ -27,6 +34,14 @@ class Product:
             return '...boom!'
         else:
             return '...BABOOM!!'
+
+    def security_level(self):
+        if self.security_score < 5:
+            return 'No worries!'
+        elif (self.security_score >= 5) and (self.security_score < 50):
+            return 'Put product behind the counter!'
+        else:
+            return 'Put product in the vault!!'
 
 
 class BoxingGlove(Product):
